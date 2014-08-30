@@ -9,8 +9,14 @@ public class TestFrame {
     GameLoad gl;
     public TestFrame(GameLoad gl){
         this.gl=gl;
-
     }
+
+    public static void main(String[] args) {
+        GameLoad gl=new GameLoad(3,2);
+
+        gl.startSpel(5);
+    }
+
     public void geefGeld(int i,int g){
         System.out.println("Speler "+i+" heeft "+g+" aan geld.");
     }

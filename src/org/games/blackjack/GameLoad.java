@@ -11,9 +11,10 @@ public class GameLoad {
     Dealer dealer=new Dealer();
     KaartSpel kaartspel;
     Kaart uitdeelkaart;
-    TestFrame tf=new TestFrame(this);
+    TestFrame tf;
 
     public GameLoad(int aantalKaartSpellen, int aantalComputers){
+        tf=new TestFrame(this);
         //Maak kaartenDeck aan met aantal gekozen kaartspellen
         kaartspel=new KaartSpel(aantalKaartSpellen);
         spelers.add(new Speler());
@@ -22,7 +23,13 @@ public class GameLoad {
             spelers.add(new Computer());
         }
     }
+
     //Als op start gedrukt wordt. Zet inzet in voor alle spelers.
+
+    /**
+     * Start een nieuwe ronde met de opgegeven inzet.
+     * @param inzet de hoeveelheid inzet die de speler geeft
+     */
     public void startSpel(int inzet){
         for(int i=0;i<spelers.size();i++){
             tf.geefGeld(i,spelers.get(i).getGeld());
@@ -32,6 +39,10 @@ public class GameLoad {
         beginKaarten();
     }
     //Eerste ronde kaarten uitdelen
+
+    /**
+     * Nieuwe ronde: Geef de spelers allemaal 2 kaarten en de dealer 1 kaart.
+     */
     public void beginKaarten(){
         for(int i=0;i<spelers.size();i++){
             geefSpelerKaart(i);
@@ -48,6 +59,12 @@ public class GameLoad {
         geefOptiesDoor();
     }
     //Geef opties per spelronde van de gekozen speler i
+
+    /**
+     * Geef de opties voor speler i.
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     * @return de opties als boolean[] terug
+     */
     public boolean[] getOpties(int i){
         //Optie0=Hit; Optie1=Stand; Optie2=Split; Optie3=Double; Optie4=Insurance; Optie5=Restart
         boolean[] opties=new boolean[6];
@@ -67,18 +84,32 @@ public class GameLoad {
         else opties[5]=true;
         return opties;
     }
+
+    /**
+     * Controleer of speler i over 21 is.
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     * @return true als speler over 21 is; false als niet
+     */
     public boolean isSpelerOver21(int i){
         return spelers.get(i).isOver21();
     }
-    //Controleer of alle spelers gepassed hebben
+
+    /**
+     * Controleer of alle spelers gepassed hebben
+     * @return true als alle spelers gepassed hebben; false als één van de spelers niet gepassed heeft
+     */
     public boolean isAlleSpelersPass(){
         for(Speler s:spelers){
             if(!s.getPass())return false;
         }
         return true;
     }
-    //Speel de computers na de speler; indien spel over is voor alle spelers, geef dealer kaarten
-    //tot min 17 is bereikt; geef dan de punten en invoerscherm om opnieuw te beginnen.
+
+
+    /**
+     * Speel de computers na de speler; indien spel over is voor alle spelers, geef dealer kaarten
+     * tot min 17 is bereikt; geef dan de punten en invoerscherm om opnieuw te beginnen.
+     */
     public void speelOverigeSpelers(){
         tf.geefWaarde(0, spelers.get(0).getWaardeHand());
         for(int i=1;i<spelers.size();i++){
@@ -122,42 +153,76 @@ public class GameLoad {
             this.geefOptiesDoor();
         }
     }
-    //Geef de bank kaarten totdat de waarde op 17 of hoger zit
+
+    /**
+     * Geef de bank kaarten totdat de waarde op 17 of hoger zit
+     */
     public void geefDealerKaarten(){
         while(!isDealerOver17()){
             geefDealerKaart();
         }
 
     }
-    //Geef opties door aan GUI voor speler
+
+    /**
+     * Geef opties door aan GUI voor speler
+     */
     public void geefOptiesDoor(){
         tf.geefOpties(getOpties(0));
     }
-    //Optie speel door met de hand (hit). Dus geef speler nog een kaart.
+
+    /**
+     * Optie speel door met de hand (hit). Dus geef speler nog een kaart.
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void hit(int i){
         geefSpelerKaart(i);
     }
-    //Optie pass; zet eigenschap pass hand op true
-    //Bij een volgende hand; ga naar volgende hand
+
+    /**
+     * Optie pass; zet eigenschap pass hand op true
+     * Bij een volgende hand; ga naar volgende hand
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void pass(int i){
         spelers.get(i).passTrue();
         spelers.get(i).volgendeHand();
     }
+
+    /**
+     * Splits de kaarten van de actuele hand
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void split(int i){
         spelers.get(i).splitKaarten();
     }
-    //Verdubbel de inzet, geef speler nog één kaart en zet vervolgens op pass
-    //(Want je krijgt er maar eentje)
+
+
+    /**
+     * Verdubbel de inzet, geef speler nog één kaart en zet vervolgens op pass (Want je krijgt er maar eentje)
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void doubleInzet(int i){
         spelers.get(i).doubleInzet();
         geefSpelerKaart(i);
         pass(i);
     }
+
+    /**
+     * Indien bank aas heeft als eerste kaart, kan een verzekering worden ingesteld.
+     * Hierbij wordt de verzekering van de speler op de helft van de inzet gezet.
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void insure(int i){
         spelers.get(i).setInsurance();
         geefSpelerKaart(i);
     }
-    //Geef speler een kaart
+
+
+    /**
+     * Geef speler i een kaart
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void geefSpelerKaart(int i){
         //Gebruikte kaarten bij ongebruikte kaarten doen indien over helft
         if(kaartspel.isOngebruikteKaartenOnderHelft()){
@@ -171,7 +236,10 @@ public class GameLoad {
         //Kaart aan speler geven
         spelers.get(i).krijgKaart(uitdeelkaart);
     }
-    //Geef dealer een kaart
+
+    /**
+     * Geef de dealer een kaart
+     */
     public void geefDealerKaart(){
         //Gebruikte kaarten bij ongebruikte kaarten doen indien over helft
         if(kaartspel.isOngebruikteKaartenOnderHelft()){
@@ -182,18 +250,32 @@ public class GameLoad {
         tf.geefKaart(spelers.size(),uitdeelkaart.getWaarde(),uitdeelkaart.getSoort());
         dealer.krijgKaart(uitdeelkaart);
     }
-    //Als spel afgelopen is; verwijder alle handen van zowel spelers als dealer
+
+
+    /**
+     * Als spel afgelopen is; verwijder alle handen van zowel spelers als dealer
+     */
     public void resetSpel(){
         for(Speler s:spelers){
             kaartspel.voegGebruikteKaartenToe(s.verwijderHanden());
         }
         kaartspel.voegGebruikteKaartenToe(dealer.verwijderKaarten());
     }
-    //Controleer of dealer over 17 is
+
+
+    /**
+     * Controleer of dealer over 17 is
+     * @return true als dealer over 17 is; false als niet
+     */
     public boolean isDealerOver17(){
         return dealer.isDealerOver17();
     }
-    //Controleer & zet status handen van de speler (gewonnen, verloren, gelijkspel)
+
+
+    /**
+     * Controleer & zet status handen van de speler (gewonnen, verloren, gelijkspel)
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     */
     public void setStatusSpeler(int i){
         spelers.get(i).resetCI();
         do{
@@ -210,6 +292,13 @@ public class GameLoad {
         }
 
     }
+
+    /**
+     * Controleer de status van een hand van een speler i en geeft statuswaarde terug.
+     * 1=Gewonnen;2=verloren;3=gelijkspel;4=blackjack gewonnen
+     * @param i de index waarde van de speler uit ArrayList<Speler> spelers
+     * @return statuswaarde
+     */
     public int checkStatus(int i){
         int waarde=spelers.get(i).getWaardeHand()[1];
         //1=Gewonnen;2=verloren;3=gelijkspel;4=blackjack gewonnen
@@ -239,6 +328,10 @@ public class GameLoad {
         }
         return status;
     }
+
+    /**
+     * Geeft van alle spelers de status per hand
+     */
     public void geefStatusSpelers(){
         for(int i=0;i<spelers.size();i++){
             int j=0;
@@ -249,6 +342,11 @@ public class GameLoad {
 
         }
     }
+
+    /**
+     * Geef de totale grootte van het aantal spelers & dealer
+     * @return totale grootte aantal spelers en dealer
+     */
     public int getSizeSpelers(){
         return spelers.size()+1;
     }
