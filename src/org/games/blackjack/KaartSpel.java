@@ -14,32 +14,52 @@ public class KaartSpel {
         schudKaarten();
     }
 
-    //Schud ongebruikte kaarten
+
+
+    /**
+     * Schud de ongebruikte kaarten
+     */
     public void schudKaarten(){
         Collections.shuffle(ongebruikteKaartDeck);
     }
 
-    //Geef een kaart uit het deck
+
+    /**
+     * Geef een kaart uit de ongebruikte kaarten
+     * @return Kaart
+     */
     public Kaart geefKaart(){
         return ongebruikteKaartDeck.remove(0);
     }
 
-    //Bij einde spel voeg gebruikte kaarten toe aan gebruikte KaartDeck
+    /**
+     * Voeg de door spelers gebruikte kaarten van een spel toe aan de gebruikte kaarten
+     * @param kaarten de spelers gebruikte kaarten
+     */
     public void voegGebruikteKaartenToe(ArrayList<Kaart> kaarten){
         gebruikteKaartDeck.addAll(kaarten);
     }
-    //Return true als gebruikte kaartdeck groter is dan ongebruikte kaartdeck
+
+    /**
+     * Controleer of gebruikte kaarten groter is dan ongebruikte kaarten
+     * @return true als gebruikte kaarten aantal groter is dan ongebruikte kaarten; false als niet
+     */
     public boolean isOngebruikteKaartenOnderHelft(){
         return gebruikteKaartDeck.size()>ongebruikteKaartDeck.size();
     }
 
-    //Indien deck over helft is, voeg gebruikte kaarten toe en schud
+    /**
+     * Als ongebruikte kaarten over de heflt is, voeg dan de gebruikte kaarten weer toe en schud
+     */
     public void voegGebruikteKaartenToe(){
         ongebruikteKaartDeck.addAll(gebruikteKaartDeck);
         schudKaarten();
     }
 
-    //Maak kaartspel(len) aan
+    /**
+     * Maak de kaartspel(len) aan
+     * @param aantalKaartSpellen aantal gekozen kaartspellen
+     */
     private void geefKaartSpel(int aantalKaartSpellen){
         //Aantal kaartdecks die gekozen zijn
         for(int i=1;i<=aantalKaartSpellen;i++){

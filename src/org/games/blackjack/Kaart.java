@@ -9,10 +9,18 @@ public class Kaart {
         this.soort = soort;
     }
 
+    /**
+     * Geef de waarde van de kaart
+     * @return int waarde van kaart
+     */
     public int getWaarde() {
         return waarde;
     }
 
+    /**
+     * Geef de soort van de kaart
+     * @return Soort soort van kaart
+     */
     public Soort getSoort() {
         return soort;
     }
