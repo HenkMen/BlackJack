@@ -1,9 +1,9 @@
-package games.blackjackgui;
+package org.games.blackjackgui;
+
+import java.util.Scanner;
 
 import org.games.blackjack.GameLoad;
 import org.games.blackjack.Soort;
-
-import java.util.Scanner;
 
 public class TestFrame {
     GameLoad gl;

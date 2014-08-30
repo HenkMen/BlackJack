@@ -1,4 +1,4 @@
-package games.blackjack;
+package org.games.blackjack;
 
 public class Kaart {
     private int waarde;

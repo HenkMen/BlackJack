@@ -1,9 +1,9 @@
-package games.blackjack;
-
-import org.games.blackjackgui.TestFrame;
+package org.games.blackjack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.games.blackjackgui.TestFrame;
 
 public class GameLoad {
 

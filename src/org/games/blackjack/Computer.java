@@ -1,4 +1,4 @@
-package games.blackjack;
+package org.games.blackjack;
 
 public class Computer extends Speler{
     public int bepaalOptie(boolean[] opties){

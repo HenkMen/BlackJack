@@ -1,4 +1,4 @@
-package games.blackjack;
+package org.games.blackjack;
 
 public class Dealer extends Persoon{
     public boolean isDealerOver17(){
