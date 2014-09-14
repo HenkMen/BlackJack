@@ -39,6 +39,7 @@ public class Speler extends Persoon{
      * @param i het af te trekken bedrag
      */
     public void changeGeld(int i){
+
         geld-=i;
     }
     //Geef kaart aan actuele hand
@@ -49,6 +50,7 @@ public class Speler extends Persoon{
      */
     @Override
     public void krijgKaart(Kaart kaart){
+
         hand.get(cI).voegKaartToe(kaart);
     }
 
@@ -57,6 +59,7 @@ public class Speler extends Persoon{
      * @return true als hand splitsbaar is; false zo niet
      */
     public boolean isSplittable(){
+
         return hand.get(cI).isSplittable();
     }
 

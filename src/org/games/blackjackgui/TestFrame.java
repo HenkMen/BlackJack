@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.games.blackjack.GameLoad;
 import org.games.blackjack.Soort;
 
-public class TestFrame {
+public class TestFrame implements BlackJackController {
     GameLoad gl;
     public TestFrame(GameLoad gl){
         this.gl=gl;
@@ -17,12 +17,15 @@ public class TestFrame {
         gl.startSpel(5);
     }
 
-    public void geefGeld(int i,int g){
+    @Override
+    public void geefGeld(int i, int g){
         System.out.println("Speler "+i+" heeft "+g+" aan geld.");
     }
-    public void geefInzet(int i,int inzet){
+    @Override
+    public void geefInzet(int i, int inzet){
         System.out.println("Speler "+i+" zet "+inzet+" aan inzet in.");
     }
+    @Override
     public void geefInvoer(){
         Scanner in=new Scanner(System.in);
         System.out.print("Nieuw spel beginnen? (Ja, J, j of ja)");
@@ -34,6 +37,7 @@ public class TestFrame {
         }
         else geefInvoer();
     }
+    @Override
     public void geefKaart(int i, int waarde, Soort soort) {
         Soort kaartsoort=soort;
         if(i==gl.getSizeSpelers()-1)System.out.println("Dealer krijgt kaart "+waarde);
@@ -41,6 +45,7 @@ public class TestFrame {
     }
 
 
+    @Override
     public void geefOpties(boolean[] bs) {
 
         // TODO Auto-generated method stub
@@ -58,20 +63,25 @@ public class TestFrame {
 
 
     }
+    @Override
     public void spelerPass(int i){
         System.out.println("Speler "+i+" past.");
     }
+    @Override
     public void kaartenZijnGesplitst(int i){
         System.out.println("Kaarten zijn gesplitst voor speler "+i);
     }
+    @Override
     public void inzetVerdubbeld(int i){
         System.out.println("Inzet is verdubbeld voor speler "+i);
     }
+    @Override
     public void verzekering(int i){
         System.out.println("Verzekering voor speler "+i);
     }
     //Zet gekozen nummer in dit geval om. Hiervoor in de plaats komt straks
     //dat iedere button een eigen functie in gameload uitvoert.
+    @Override
     public void voerGekozenOptieUit(int gekozenOptie){
         switch(gekozenOptie){
             case 0:gl.hit(0);
@@ -97,10 +107,12 @@ public class TestFrame {
         }
 
     }
+    @Override
     public void blackJack(int speler){
         System.out.println("BlackJack voor speler "+speler);
     }
 
+    @Override
     public void geefStatusHand(int speler, int status, int hand){
         String statusst="";
         if(status==1)statusst="gewonnen";
@@ -109,9 +121,11 @@ public class TestFrame {
         if(status==4)statusst="blackjack";
         System.out.println("Speler "+speler+" heeft "+statusst+" met hand "+hand);
     }
+    @Override
     public void geefWaarde(int speler, int[] waarde){
         System.out.println("Speler "+speler+" heeft nu waarde "+waarde[0]+" - "+waarde[1]);
     }
+    @Override
     public void leegGebruikteKaarten(){
         System.out.println("Gebruikte kaarten worden bij ongebruikte kaarten gevoegd en geschud.");
     }

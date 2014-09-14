@@ -3,6 +3,7 @@ package org.games.blackjack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.games.blackjackgui.BlackJackGuiHulp;
 import org.games.blackjackgui.TestFrame;
 
 public class GameLoad {
@@ -11,16 +12,31 @@ public class GameLoad {
     Dealer dealer=new Dealer();
     KaartSpel kaartspel;
     Kaart uitdeelkaart;
-    TestFrame tf;
+    BlackJackGuiHulp tf;
 
     public GameLoad(int aantalKaartSpellen, int aantalComputers){
-        tf=new TestFrame(this);
+        //tf=new TestFrame(this);
         //Maak kaartenDeck aan met aantal gekozen kaartspellen
         kaartspel=new KaartSpel(aantalKaartSpellen);
         spelers.add(new Speler());
         //Maak computers aan indien dat gekozen is
         for(int i=0;i<aantalComputers;i++){
             spelers.add(new Computer());
+        }
+    }
+
+    public GameLoad(int aantalKaartSpellen, int aantalComputers,BlackJackGuiHulp gui){
+        tf=gui;
+        //Maak kaartenDeck aan met aantal gekozen kaartspellen
+        kaartspel=new KaartSpel(aantalKaartSpellen);
+        spelers.add(new Speler());
+        //Maak computers aan indien dat gekozen is
+        for(int i=0;i<aantalComputers;i++){
+            spelers.add(new Computer());
+        }
+        for(int i=0;i<spelers.size();i++){
+            tf.geefGeld(i,spelers.get(i).getGeld());
+            tf.geefInzet(i,5);
         }
     }
 
